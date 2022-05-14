@@ -1,15 +1,18 @@
 const express = require('express')
 const fs = require('fs')
 const {Router } = express
+const {Producto} = require('../classes/producto')
 
 const router = new Router()
+router.use(express.json())
+router.use(express.urlencoded({extended:true}))
 
-router.get("/", (req, res) => {
-    fs.readFileSync("../productos.json", "uft-8", (err, data) =>{
+router.get("/productos", (req, res) => {
+    fs.readFileSync("../data/productos.json", "uft-8", (err, data) =>{
         if(err) {
             console.log("error de lectura")
         }
-        res.sendFile("../producots.html", {data: JSON.parse(data)})
+        res.sendFile(__dirname+"/public/productos.html", {data: JSON.parse(data)})
     })
 })
 

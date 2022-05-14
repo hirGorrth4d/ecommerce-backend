@@ -1,0 +1,47 @@
+[
+    {
+        "nombre": "Iphone 12",
+        "precio": 800,
+        "thumbnail": "https://s3.pricemestatic.com/Large/Images/RetailerProductImages/StRetailer1292/rp_36050481_0082275468_l.png",
+        "id": 1,
+        "code": "APL01",
+        "stock": 300,
+        "descripcion": "Iphone 12 procesador A15"
+    },
+    {
+        "nombre": "Macbook Pro 14",
+        "precio": 1600,
+        "thumbnail": "https://www.hiptoro.com/wp-content/uploads/2019/06/MacBook-Pro-2019-e1559558024264.jpg",
+        "id": 2,
+        "code": "APL02",
+        "stock": 300,
+        "descripcion": "Macbook Pro 2022 14 pulgados chip M1 Pro"
+    },
+    {
+        "nombre": "Apple Watch",
+        "precio": 600,
+        "thumbnail": "https://www.bhphotovideo.com/images/images2500x2500/apple_mj362ll_a_apple_watch_38mm_smartwatch_1293065.jpg",
+        "id": 3,
+        "code": "APL03",
+        "stock": 300,
+        "descripcion": "Apple watch 3ra generacion"
+    },
+    {
+        "nombre": "Macbook Air",
+        "precio": 1000,
+        "thumbnail": "https://www.osslab.com.tw/wp-content/uploads/2017/08/S_14278725-1.jpg",
+        "id": 4,
+        "code": "APL04",
+        "stock": 300,
+        "descripcion": "Macbook Air 13 pulgadas chip M1"
+    },
+    {
+        "nombre": "Ipad",
+        "precio": 900,
+        "thumbnail": "https://cdn.macstories.net/img_2276-1621295326905.jpeg",
+        "id": 5,
+        "code": "APL05",
+        "stock": 300,
+        "descripcion": "Ipad 10ma generacion chip A14"
+    }
+]
