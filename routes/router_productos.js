@@ -1,7 +1,5 @@
 const express = require('express')
 const fs = require('fs')
-
-
 const {Router } = express
 
 const router = new Router()
@@ -36,6 +34,14 @@ router.get("/:id", (req,res) =>{
     }
 })
 
+router.get("/form", (req,res) =>{
+    if (req.query.admin) {
+        res.sendFile("form.html")
+    } else {
+        res.send("No autorizado")
+    }
+})
+
 router.post("/api/productos", (req,res)=>{
     fs.readFileSync("../productos.json", "uft-8", (err, data) =>{
         if(err) {
@@ -44,10 +50,9 @@ router.post("/api/productos", (req,res)=>{
         JSON.parse(data).push(req.body)
         res.send("Producto guardado exitosamente")
     })
+
 })
-router.post("/api/productos", (req,res)=>{
-    res.send("prueba")
-})
+
 router.put("/api/productos", (req,res)=>{
     res.send("prueba")
 })
