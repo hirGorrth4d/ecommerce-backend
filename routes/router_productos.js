@@ -6,61 +6,67 @@ const {Producto} = require('../classes/producto')
 const router = new Router()
 router.use(express.json())
 router.use(express.urlencoded({extended:true}))
+const producto = new Producto(__dirname + "/data/productos.json")
 
 router.get("/productos", (req, res) => {
-    fs.readFileSync("../data/productos.json", "uft-8", (err, data) =>{
-        if(err) {
-            console.log("error de lectura")
-        }
-        res.sendFile(__dirname+"/public/productos.html", {data: JSON.parse(data)})
-    })
+    // fs.readFileSync("../data/productos.json", "uft-8", (err, data) =>{
+    //     if(err) {
+    //         console.log("error de lectura")
+    //     }
+    //     res.sendFile(__dirname+"/public/productos.html", {data: JSON.parse(data)})
+    // })
+    const allProducts = producto.getAll()
+    res.json(allProducts)
 })
 
 router.get("/:id", (req,res) =>{
-    if (req.params.id) {
-        fs.readFileSync("../productos.json", "uft-8", (err, data) =>{
-            if(err) {
-                console.log("error de lectura")
-            }
-            res.sendFile("../producots.html", {data: JSON.parse(data)})
-        })
-    } else {
-        fs.readFileSync("../productos.json", "uft-8", (err, data) =>{
-            if(err) {
-                console.log("error de lectura")
-            }
-            let obj =JSON.parse(data).find(x =>{
-                return x.id == req.params.id
-            })
-            res.sendFile("../producots.html", {data: obj})
-        })
-    }
+    // if (req.params.id) {
+    //     fs.readFileSync("../productos.json", "uft-8", (err, data) =>{
+    //         if(err) {
+    //             console.log("error de lectura")
+    //         }
+    //         res.sendFile("../producots.html", {data: JSON.parse(data)})
+    //     })
+    // } else {
+    //     fs.readFileSync("../productos.json", "uft-8", (err, data) =>{
+    //         if(err) {
+    //             console.log("error de lectura")
+    //         }
+    //         let obj =JSON.parse(data).find(x =>{
+    //             return x.id == req.params.id
+    //         })
+    //         res.sendFile("../producots.html", {data: obj})
+    //     })
+    // }
+    const id = parseInt(req.params.id)
+    const result = producto.getById(id)
+    res.json(result)
 })
 
-router.get("/form", (req,res) =>{
-    if (req.query.admin) {
-        res.sendFile("form.html")
-    } else {
-        res.send("No autorizado")
-    }
+
+router.post("/productos", (req,res)=>{
+    // fs.readFileSync("../productos.json", "uft-8", (err, data) =>{
+    //     if(err) {
+    //         console.log("error de lectura")
+    //     }
+    //     JSON.parse(data).push(req.body)
+    //     res.send("Producto guardado exitosamente")
+    // })
+    const product = req.body
+    const result = producto.saveProducts(product)
+    res.json(result)
 })
 
-router.post("/api/productos", (req,res)=>{
-    fs.readFileSync("../productos.json", "uft-8", (err, data) =>{
-        if(err) {
-            console.log("error de lectura")
-        }
-        JSON.parse(data).push(req.body)
-        res.send("Producto guardado exitosamente")
-    })
-
+router.put("/:id", (req,res)=>{
+    const id  = parseInt(req.params.id)
+    const product = req.body
+    const result = producto.updateById(id, product)
+    res.json(result)
 })
-
-router.put("/api/productos", (req,res)=>{
-    res.send("prueba")
-})
-router.delete("/api/productos", (req,res)=>{
-    res.send("prueba")
+router.delete("/:id", (req,res)=>{
+    const id = parseInt(req.params.id)
+    const result = producto.deleteByID(id)
+    res.json(result)
 })
 
 
