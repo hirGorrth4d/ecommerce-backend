@@ -2,11 +2,26 @@ const express = require('express')
 const fs =require("fs")
 const {Router } = express
 const {Carrito} = require('../classes/carrito')
+const {Producto} = require('../classes/producto')
 
 const router = new Router()
 
-router.get("/", (req, res) => {
+const carrito = new Carrito(__dirname + "/data/carrito.json")
+const producto = new Producto(__dirname + "/data/productos.json")
 
+router.get("/", (req, res) => {
+    const cart = carrito.getAll()
+    res.json(cart)
+})
+
+router.post("/", (req,res) =>{
+    const products = req.body.products.map(Number)
+    const allProducts = producto.getAll()
+    const productFind = allProducts.flter((product) => {
+        products.includes(product.id)
+    })
+    const cart = carrito.save({products: productFind})
+    res.json(cart)
 })
 
 router.post("/:id/productos/:idCarrito", (req,res)=>{
@@ -39,16 +54,34 @@ router.post("/:id/productos/:idCarrito", (req,res)=>{
         })
     })
 })
-router.post("/api/carrito", (req,res)=>{
-    res.send("prueba")
-})
-router.put("/api/carrito", (req,res)=>{
-    res.send("prueba")
-})
-router.delete("/:id", (req,res)=>{
-    res.send("prueba")
+router.post("/:id/productos", (req,res)=>{
+    const id = parseInt(req.params.id)
+    const products = req.body.products.map(Number)
+    const allProducts = producto.getAll()
+    const productFind = allProducts.flter((product) => {
+        products.includes(product.id)
+    })
+    if (productFind.length === 0){
+        res.json("no se encontraron productos")
+    } else {
+        const result = carrito.addProductoCartById(id, productFind)
+        res.json(result)
+    }
+    
+
 })
 
+router.delete("/:id", (req,res)=>{
+    const id = parseInt(req.params.id)
+    const cart = carrito.deleteById(id)
+    res.json(cart)
+})
+router.delete("/:id/productos/:id_prod", (req,res)=>{
+    const id = parseInt(req.params.id)
+    const productId= parseInt(req.params.id_prod)
+    const cart = carrito.deleteProductoFromCartById(id, productId)
+    res.json(cart)
+})
 
 
 module.exports = router

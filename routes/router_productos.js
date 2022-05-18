@@ -51,23 +51,42 @@ router.post("/productos", (req,res)=>{
     //     }
     //     JSON.parse(data).push(req.body)
     //     res.send("Producto guardado exitosamente")
+    
     // })
-    const product = req.body
-    const result = producto.saveProducts(product)
-    res.json(result)
+    if (req.params.admin) {
+        const product = req.body
+        const result = producto.saveProducts(product)
+        res.json(result)
+
+    } else {
+        res.send("no tenes permiso para ver esto")
+    }
 })
 
 router.put("/:id", (req,res)=>{
-    const id  = parseInt(req.params.id)
-    const product = req.body
-    const result = producto.updateById(id, product)
-    res.json(result)
+    if (req.params.admin) {
+        
+         const id  = parseInt(req.params.id)
+         const product = req.body
+         const result = producto.updateById(id, product)
+         res.json(result)
+
+    } else {
+        res.send("no tenes permiso para ver esto")
+    }
 })
 router.delete("/:id", (req,res)=>{
-    const id = parseInt(req.params.id)
-    const result = producto.deleteByID(id)
-    res.json(result)
+    if (req.params.admin) {
+        const id = parseInt(req.params.id)
+        const result = producto.deleteByID(id)
+        res.json(result)
+
+    } else {
+        res.send("no tenes permiso para ver esto")
+    }
 })
+
+
 
 
 
